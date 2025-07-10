@@ -2,6 +2,7 @@
 header("Content-Type: application/json");
 include 'config.php';
 
+// validasi request
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(["success" => false, "message" => "Metode tidak diizinkan. Gunakan POST."]);
@@ -28,7 +29,7 @@ if (isset($_FILES['imageUrl']) && $_FILES['imageUrl']['error'] === UPLOAD_ERR_OK
     $relativePath = $uploadDir . uniqid() . '_' . basename($_FILES['imageUrl']['name']);
     $absolutePath = __DIR__ . '/' . $relativePath;
 
-    // Buat folder jika belum ada
+    // folder untuk upload
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }

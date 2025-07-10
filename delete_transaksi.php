@@ -2,6 +2,8 @@
 header("Content-Type: application/json");
 include 'config.php';
 
+// validasi request
+
 if ($_SERVER['REQUEST_METHOD'] !== 'DELETE') {
     http_response_code(405); // Metode tidak diizinkan
     echo json_encode(["success" => false, "message" => "Metode tidak diizinkan. Gunakan DELETE."]);

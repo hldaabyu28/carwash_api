@@ -23,9 +23,24 @@ $username = $data['username'];
 $password = password_hash($data['password'], PASSWORD_DEFAULT);
 $namaLengkap = $data['nama_lengkap'];
 
+
+
 // Gunakan prepared statements untuk menyimpan data
 $stmt = $conn->prepare("INSERT INTO users (username, password, nama_lengkap) VALUES (?, ?, ?)");
 $stmt->bind_param("sss", $username, $password, $namaLengkap);
+
+// Cek apakah username sudah ada
+$sql = "SELECT username FROM users WHERE username = ?";
+$stmt2 = $conn->prepare($sql);
+$stmt2->bind_param("s", $username);
+$stmt2->execute();
+$stmt2->store_result();
+
+if ($stmt2->num_rows > 0) {
+    http_response_code(400); // Permintaan buruk
+    echo json_encode(["success" => false, "message" => "Username sudah ada."]);
+    exit;
+}
 
 if ($stmt->execute()) {
     http_response_code(201); // Sumber daya berhasil dibuat
