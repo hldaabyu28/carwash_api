@@ -43,7 +43,7 @@ if ($stmt2->num_rows > 0) {
 }
 
 if ($stmt->execute()) {
-    http_response_code(201); // Sumber daya berhasil dibuat
+    http_response_code(200); // Sumber daya berhasil dibuat
     echo json_encode(["success" => true, "message" => "Pendaftaran berhasil."]);
 } else {
     http_response_code(500); // Kesalahan server
